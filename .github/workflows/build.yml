@@ -16,12 +16,14 @@ jobs:
           gradle-version: '8.7'
       - name: Susun proyek Android
         run: |
-          test -f index.html || { echo "Upload index.html dulu"; exit 1; }
+          f=$(ls *.html 2>/dev/null | head -n1 || true)
+          [ -n "$f" ] || { echo "Upload file index.html dulu"; exit 1; }
           mkdir -p p/app/src/main/assets p/app/src/main/java/id/kadoind/app p/app/src/main/res/drawable
-          cp index.html p/app/src/main/assets/
+          cp "$f" p/app/src/main/assets/index.html
           cd p
           cat > settings.gradle <<'EOF'
           pluginManagement { repositories { google(); mavenCentral() } }
+          dependencyResolutionManagement { repositories { google(); mavenCentral() } }
           rootProject.name = "KadoInd"
           include ':app'
           EOF
