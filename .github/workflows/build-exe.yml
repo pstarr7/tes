@@ -1,0 +1,55 @@
+name: Build EXE
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Susun proyek desktop
+        run: |
+          f=$(ls *.html 2>/dev/null | head -n1 || true)
+          [ -n "$f" ] || { echo "Upload file index.html dulu"; exit 1; }
+          mkdir d
+          cp "$f" d/index.html
+          cd d
+          cat > package.json <<'EOF'
+          {
+            "name": "kadoind",
+            "version": "1.0.0",
+            "description": "KadoInd",
+            "author": "KadoInd",
+            "main": "main.js",
+            "devDependencies": { "electron": "^33.2.0", "electron-builder": "^25.1.8" },
+            "build": {
+              "appId": "id.kadoind.app",
+              "productName": "KadoInd",
+              "files": ["main.js", "index.html"],
+              "win": { "target": "portable", "artifactName": "KadoInd.exe" }
+            }
+          }
+          EOF
+          cat > main.js <<'EOF'
+          const { app, BrowserWindow, Menu } = require('electron');
+          const path = require('path');
+          app.whenReady().then(() => {
+            Menu.setApplicationMenu(null);
+            const w = new BrowserWindow({ width: 500, height: 700, title: 'KadoInd' });
+            w.loadFile(path.join(__dirname, 'index.html'));
+          });
+          app.on('window-all-closed', () => app.quit());
+          EOF
+      - name: Build
+        working-directory: d
+        run: npm install --no-audit --no-fund && npx electron-builder --win portable --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KadoInd-exe
+          path: d/dist/*.exe
