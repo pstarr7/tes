@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KadoInd</title>
+<style>
+:root{--bg:#FFF3F0;--cd:#fff;--ink:#2A1230;--mu:#7C6478;--ac:#C2185B;--on:#fff;--soft:#FFE0E8;--ln:#F3D6DD;--gd:#E9B44C;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1D0F24;--cd:#2B1A33;--ink:#FFEDEF;--mu:#C3A9BE;--ac:#FF6B9A;--on:#2A1230;--soft:#3E2147;--ln:#47294F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1D0F24;--cd:#2B1A33;--ink:#FFEDEF;--mu:#C3A9BE;--ac:#FF6B9A;--on:#2A1230;--soft:#3E2147;--ln:#47294F;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+#app{max-width:480px;margin:0 auto;padding:0 20px 120px}
+h1,h2,h3{font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold",system-ui,sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin:0 0 .5em}
+h1{font-size:30px}h2{font-size:22px;margin-top:36px}h3{font-size:18px;margin-top:22px}
+p{margin:0 0 .8em}.mu{color:var(--mu)}.sm{font-size:14px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);display:flex;align-items:center;gap:10px;padding:12px 0}
+.top b{flex:1}.ic{border:0;background:var(--soft);color:var(--ink);width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer}
+.prog{height:6px;background:var(--ln);border-radius:9px;overflow:hidden;margin-bottom:20px}.prog i{display:block;height:100%;background:var(--ac);transition:width .3s}
+.btn{border:0;background:var(--ac);color:var(--on);font:inherit;font-weight:700;padding:14px 22px;border-radius:999px;min-height:48px;width:100%;cursor:pointer}
+.btn.g{background:var(--soft);color:var(--ink)}.btn:disabled{opacity:.45}
+.lnk{background:none;border:0;color:var(--ac);font:inherit;font-weight:700;font-size:15px;padding:12px 0;cursor:pointer}
+.card{background:var(--cd);border:1px solid var(--ln);border-radius:22px;padding:16px;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.chip{border:1px solid var(--ln);background:var(--cd);color:var(--ink);font:inherit;font-size:15px;padding:10px 14px;border-radius:999px;min-height:44px;cursor:pointer}
+.chip.on{background:var(--ac);border-color:var(--ac);color:var(--on);font-weight:700}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+input,select,textarea{width:100%;box-sizing:border-box;font:inherit;padding:12px 14px;border-radius:14px;border:1px solid var(--ln);background:var(--cd);color:var(--ink)}
+textarea{min-height:100px}.er{border-color:#d33}
+.hero{text-align:center;padding:12px 0 8px}
+.gift{width:108px;height:92px;background:var(--ac);border-radius:6px 6px 14px 14px;position:relative;margin:36px auto 34px}
+.gift::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:20px;margin-left:-10px;background:var(--gd)}
+.gift::after{content:"";position:absolute;left:50%;top:-40px;width:38px;height:24px;margin-left:-19px;border:6px solid var(--gd);border-radius:50% 50% 8px 8px;box-sizing:border-box}
+.gift i{position:absolute;left:-8px;right:-8px;top:-14px;height:22px;background:var(--ac);border-radius:8px;filter:brightness(.85)}
+.gift i::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:20px;margin-left:-10px;background:var(--gd)}
+.art{height:84px;border-radius:16px;background:var(--soft);display:grid;place-items:center;font-size:34px;letter-spacing:6px;margin-bottom:12px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.pr{font:800 22px ui-rounded,system-ui,sans-serif;color:var(--ac)}
+.bd{background:var(--soft);border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700}
+.h{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px}.h .card{min-width:190px;margin:0}
+details{background:var(--cd);border:1px solid var(--ln);border-radius:14px;padding:12px 14px;margin-bottom:8px}summary{font-weight:700;cursor:pointer}
+.bot{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--ln);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px))}
+.bot div{display:flex;align-items:center;gap:12px;max-width:440px;margin:0 auto}
+.box{height:80px;border-radius:16px;display:grid;place-items:center;font-size:36px;position:relative;overflow:hidden;margin:8px 0}
+.box::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:10px;margin-left:-5px;background:rgba(255,255,255,.5)}
+.b0{background:#c9a57b}.b0::after{display:none}.b1{background:var(--ac)}.b2{background:#2A1230;border:2px solid var(--gd)}
+.opt{display:flex;justify-content:space-between;align-items:center;border:2px solid var(--ln);border-radius:16px;padding:14px;margin-bottom:8px;background:var(--cd);width:100%;font:inherit;color:var(--ink);cursor:pointer;text-align:left}.opt.on{border-color:var(--ac);background:var(--soft)}
+.tl{display:flex;gap:14px;padding:0 0 22px;opacity:.45;position:relative}
+.tl::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--ln)}.tl:last-of-type::before{display:none}
+.tl.done,.tl.now{opacity:1}.tl.done::before{background:var(--ac)}
+.dot{width:40px;height:40px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:20px;flex:none}
+.tl.now .dot{background:var(--ac);box-shadow:0 0 0 5px var(--soft)}.tl small{display:block;color:var(--mu)}
+.ln{display:flex;justify-content:space-between;padding:4px 0}.tt{font-weight:800;border-top:1px dashed var(--ln);margin-top:6px;padding-top:10px}
+#t{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;white-space:nowrap}#t.s{opacity:1}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="t"></div>
+<script>
+const rp=n=>"Rp"+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"."),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const FEE={cur:20000,ship:15000,card:10000,pack:[0,25000,50000]};
+const PR=[["Kopi Specialty 200g","☕",85000],["Mousepad Gaming","🖱️",65000],["Snack Mini","🍿",25000],["Mug Keramik","🍵",45000],["Hand Cream dan Lip Balm","🧴",45000],["Sheet Mask Set","🧖",35000],["Notebook dan Pen Set","📓",42000],["Lilin Aromaterapi","🕯️",55000],["Cokelat Premium","🍫",45000],["Keychain Gamer","🎮",29000],["Pouch Organizer","🔌",35000],["Tote Bag Minimalis","👜",49000],["Bingkai Foto Mini","🖼️",39000],["Teh Premium","🫖",48000]];
+const P=(n,e,i,t,o,r,s)=>({n,e,i:i.split(",").map(Number),t:t.split(","),o:o.split(","),r:r.split(","),s:s.split(",")});
+const PK=[
+P("Gamer Coffee Starter","🎮","0,1,2","gaming,kopi,tech,anime","*","teman,sahabat,adik,pacar,rekan kerja","practical,funny,minimalist"),
+P("Cozy Gaming Night","🕹️","2,8,9,0","gaming,anime,musik,kuliner","ulang tahun,natal,graduation","teman,sahabat,adik,kakak","funny,cute,surprise"),
+P("Personalized Coffee Break","☕","0,3,2","kopi,kuliner,buku","*","*","personal,practical,minimalist,elegant"),
+P("Self-Care Kit","🧖","4,5,7","self-care,beauty,fashion","ulang tahun,hari ibu,get well,thank you,valentine","pacar,sahabat,kakak,orang tua,suami/istri","elegant,cute,romantic,personal"),
+P("Work Bestie","💼","6,3,2","buku,kopi,tech","thank you,ulang tahun,graduation,lainnya","rekan kerja,atasan,teman","practical,minimalist,funny"),
+P("Romantic Date Night","🕯️","8,7,12","kuliner,art,musik,self-care","anniversary,valentine,ulang tahun,pernikahan","pacar,suami/istri","romantic,elegant,personal,luxury"),
+P("Cozy Weekend","🛋️","7,13,8","buku,self-care,kuliner,musik","*","*","cute,minimalist,practical,personal"),
+P("Birthday Surprise","🎂","8,11,12","fashion,photography,art,traveling","ulang tahun,graduation,lebaran,natal","*","surprise,cute,funny"),
+P("Traveler Snap Kit","🧳","10,11,12","traveling,photography,tech,fashion","*","*","practical,minimalist,personal"),
+P("Sweet Mini Box","🍬","2,8","kuliner,musik","*","*","cute,funny,minimalist"),
+P("Luxury Treat Box","✨","0,7,8,4,11,13","kopi,kuliner,self-care,fashion,art","anniversary,pernikahan,valentine,lebaran,hari ibu,hari ayah","*","luxury,elegant,romantic")];
+const OC=["Ulang Tahun","Anniversary","Valentine","Graduation","Pernikahan","Lebaran","Natal","Hari Ibu","Hari Ayah","Thank You","Get Well","Lainnya"],
+RL=["Pacar","Suami/Istri","Teman","Sahabat","Kakak","Adik","Orang tua","Rekan kerja","Atasan","Lainnya"],
+IN=["Gaming","Kopi","Musik","Traveling","Beauty","Fashion","Olahraga","Buku","Kuliner","Photography","Anime","Tech","Art","Self-care"],
+BD=[["Kurang dari Rp100.000",100000],["Rp100.000–Rp200.000",200000],["Rp200.000–Rp300.000",300000],["Rp300.000–Rp500.000",500000],["Rp500.000+",800000]],
+SY=["Practical","Cute","Elegant","Funny","Romantic","Luxury","Minimalist","Personal/meaningful","Surprise"],
+ST=[["🎁","Order diterima","Pesananmu sudah kami terima."],["🧠","Paket sedang dikurasi","Tim kami memilih dan menyesuaikan isi paket."],["📦","Paket sedang disiapkan","Kado sedang dikemas dengan rapi."],["🚚","Paket dikirim","Kado sedang dalam perjalanan."],["❤️","Paket diterima","Kado sudah sampai. Semoga dia senang!"]],
+TPL={"ulang tahun":"Selamat ulang tahun, {n}! Semoga di umur yang baru semakin banyak hal seru yang datang. Jangan lupa bahagia dan tetap jadi manusia paling keren! 🎉","anniversary":"Selamat anniversary, {n}! Terima kasih sudah jadi bagian terbaik dari ceritaku. 💛","valentine":"Hai {n}, aku cuma mau bilang: kamu berarti banget buatku. Happy Valentine! ❤️","graduation":"Selamat lulus, {n}! Semua kerja kerasmu terbayar. Bangga banget! 🎓","thank you":"Terima kasih banyak, {n}! Semoga kado kecil ini bikin harimu lebih manis. 🙏","get well":"Cepat sembuh ya, {n}! Semoga kado kecil ini bikin harimu lebih ceria. 🌷"};
+
+let S={v:"home",st:0,q:{occ:"",name:"",age:"",gen:"",rel:"",int:[],cu:"",dis:"",bud:0,cb:"",sty:"",ex:""},recs:[],pkg:null,pack:0,card:{on:1,to:"",msg:""},co:{},er:{},order:null};
+try{S.order=JSON.parse(localStorage.getItem("pk")||"null")}catch(e){}
+const save=()=>{try{localStorage.setItem("pk",JSON.stringify(S.order))}catch(e){}},ev=e=>{(window.__ev=window.__ev||[]).push({e,t:Date.now()})};
+const toast=m=>{const t=document.getElementById("t");t.textContent=m;t.className="s";setTimeout(()=>t.className="",2200)};
+const sum=p=>p.i.reduce((a,i)=>a+PR[i][2],0),words=s=>s.toLowerCase().split(/[\s,]+/).filter(w=>w.length>2);
+const tpl=()=>(TPL[S.q.occ.toLowerCase()]||"Untuk {n}: semoga kado kecil ini bikin harimu lebih bahagia! 🎁").replace("{n}",()=>S.q.name);
+
+// Recommendation engine (rule/tag based). Ganti isi fungsi ini dengan panggilan ke backend/LLM nanti.
+const rec=()=>{const q=S.q,iv=[...new Set([...q.int.map(x=>x.toLowerCase()),...words(q.cu)])],occ=q.occ.toLowerCase(),rel=q.rel.toLowerCase(),sty=q.sty.toLowerCase().split("/")[0],dis=words(q.dis);
+return PK.map(p=>{const total=sum(p)+FEE.cur,m=iv.filter(x=>p.t.includes(x)),r=total/q.bud,
+im=iv.length?Math.min(1,m.length/Math.min(2,iv.length)):.3,om=p.o.includes(occ)?1:p.o[0]=="*"?.6:.2,bm=r<=1?.4+.6*r:Math.max(0,1-(r-1)*3),rm=p.r.includes(rel)?1:p.r[0]=="*"?.6:.3,pm=sty&&p.s.includes(sty)?1:.4,
+txt=(p.n+p.i.map(i=>PR[i][0]).join(" ")+p.t.join(" ")).toLowerCase(),bad=dis.some(w=>txt.includes(w));
+return{...p,total,m,score:Math.max(0,Math.round(im*40+om*20+bm*20+rm*10+pm*10-(bad?25:0)))}}).sort((a,b)=>b.score-a.score).slice(0,3)};
+const why=p=>{const q=S.q,a=[];if(p.m.length)a.push(`${esc(q.name)} suka ${p.m.join(" dan ")}`);a.push(`cocok untuk ${q.occ.toLowerCase()}`);return `Kami memilih paket ini karena ${a.join(" dan ")}. Total ${rp(p.total)} ${p.total<=q.bud?"masih pas di budget":"sedikit di atas budget, isinya bisa kami sesuaikan"}.`};
+// Total dihitung terpusat di sini; di versi produksi hitung ulang di server.
+const calc=()=>{const prd=sum(S.pkg),pk=FEE.pack[S.pack],cd=S.card.on?FEE.card:0;return{prod:prd,cur:FEE.cur,pk,cd,ship:FEE.ship,total:prd+FEE.cur+pk+cd+FEE.ship}};
+
+const hd=(t,b)=>`<div class="top">${b?`<button class="ic" data-a="${b}" aria-label="Kembali">←</button>`:""}<b>${t}</b></div>`;
+const chips=(k,o,m)=>`<div class="chips">${o.map(x=>`<button type="button" class="chip${(m?S.q[k].includes(x):S.q[k]===x)?" on":""}" data-a="${m?"many":"one"}" data-k="${k}" data-v="${x}">${x}</button>`).join("")}</div>`;
+const fld=(l,k,v,ex="")=>`<label>${l}</label><input data-k="${k}" value="${esc(v)}" ${ex}${S.er[k]?' class="er"':""}>`;
+const ic=x=>`<div class="card row" style="justify-content:flex-start;gap:14px"><span style="font-size:28px">${x[0]}</span><div><b>${x[1]}</b><div class="mu sm">${x[2]}</div></div></div>`;
+const V={};
+V.home=()=>`${hd("KadoInd")}<section class="hero"><div class="gift"><i></i></div><h1>Bingung Kasih Kado Apa? Biar Kami yang Pilihkan.</h1><p class="mu">Ceritakan sedikit tentang orang yang ingin kamu kasih hadiah. Kami akan bantu kurasikan paket kado yang personal, berkesan, dan sesuai budget.</p><button class="btn" data-a="start">Cari Kado Sekarang</button>${S.order?`<button class="lnk" data-a="track">Lihat status pesanan terakhir</button>`:""}</section>
+<h2>Cara kerja</h2>${[["📝","Ceritakan penerimanya","Isi form singkat: acara, minat, dan budget."],["🧠","Kami kurasikan","Kamu dapat 3 ide paket yang paling cocok."],["💌","Personalisasi dan pesan","Tambah kartu ucapan, pilih kemasan, lalu checkout."]].map(ic).join("")}
+<h2>Contoh paket kado</h2><div class="h">${[0,2,5].map(i=>`<div class="card"><div class="art">${PK[i].i.slice(0,3).map(j=>PR[j][1]).join("")}</div><b>${PK[i].n}</b><div class="pr">${rp(sum(PK[i])+FEE.cur)}</div></div>`).join("")}</div>
+<h2>Kenapa pakai layanan ini?</h2>${[["🎯","Tanpa bingung","Kami yang menyaring ide, kamu tinggal memilih."],["💰","Sesuai budget","Total jelas sebelum kamu checkout."],["💝","Personal","Kartu ucapan dan kemasan bisa kamu atur sendiri."]].map(ic).join("")}
+<h2>Kata mereka (contoh)</h2><div class="card"><p>“Bingung cari kado buat pacar, ternyata selesai dalam 5 menit.”</p><div class="mu sm">Rani, contoh testimoni</div></div><div class="card"><p>“Kartu ucapannya bikin adikku terharu.”</p><div class="mu sm">Dimas, contoh testimoni</div></div>
+<h2>FAQ</h2>${[["Berapa lama kadonya sampai?","Estimasi disesuaikan dengan kota tujuan dan kami kabari saat pesanan dikonfirmasi."],["Bagaimana kalau budget saya kecil?","Tidak masalah, ada paket mini mulai sekitar Rp90.000."],["Boleh request produk tertentu?","Boleh, tulis di langkah terakhir dan tim kami akan menyesuaikan."]].map(f=>`<details><summary>${f[0]}</summary><p class="mu sm" style="margin:8px 0 0">${f[1]}</p></details>`).join("")}
+<div class="card hero" style="margin-top:32px"><h2 style="margin-top:8px">Siap bikin dia senyum? 🎁</h2><button class="btn" data-a="start">Cari Kado Sekarang</button></div>`;
+V.find=()=>{const q=S.q,s=S.st,x=[
+`<h2>Kado untuk acara apa?</h2>${chips("occ",OC)}`,
+`<h2>Siapa yang akan menerima?</h2>${fld("Nama penerima","q.name",q.name)}${fld("Umur","q.age",q.age,'type="number" inputmode="numeric"')}<label>Gender (opsional)</label><select data-k="q.gen">${["","Laki-laki","Perempuan"].map(g=>`<option value="${g}"${q.gen==g?" selected":""}>${g||"Tidak disebutkan"}</option>`).join("")}</select><label>Hubungan denganmu</label>${chips("rel",RL)}`,
+`<h2>Apa yang dia suka?</h2>${chips("int",IN,1)}${fld("Minat lain (opsional)","q.cu",q.cu,'placeholder="mis. skincare, kucing"')}${fld("Hal yang tidak dia suka","q.dis",q.dis,'placeholder="mis. parfum, warna pink"')}`,
+`<h2>Berapa budgetmu?</h2><div class="chips">${BD.map(b=>`<button type="button" class="chip${q.bud==b[1]&&!q.cb?" on":""}" data-a="bud" data-v="${b[1]}">${b[0]}</button>`).join("")}</div>${fld("Atau tulis budget sendiri (Rp)","q.cb",q.cb,'type="number" inputmode="numeric" placeholder="250000"')}`,
+`<h2>Gaya kadonya seperti apa?</h2>${chips("sty",SY)}`,
+`<h2>Ada hal lain yang perlu kami ketahui?</h2><textarea data-k="q.ex" placeholder="Dia suka warna hitam dan tidak terlalu suka barang yang terlalu girly.">${esc(q.ex)}</textarea>`];
+return `${hd(`Langkah ${s+1} dari 6`,"prev")}<div class="prog"><i style="width:${(s+1)/6*100}%"></i></div>${x[s]}<div class="bot"><div><button class="btn" data-a="next">${s==5?"Bantu Kami Kenali Dia 🎁":"Lanjut"}</button></div></div>`};
+V.recs=()=>`${hd("Ide kado","redo")}<h1>Kami punya beberapa ide untuk ${esc(S.q.name)} 🎁</h1><p class="mu sm">Diurutkan dari yang paling cocok dengan ceritamu.</p>${S.recs.map((p,k)=>`<div class="card"><div class="art">${p.i.slice(0,4).map(j=>PR[j][1]).join("")}</div><div class="row"><b>${p.n}</b><span class="bd">${p.score}% cocok</span></div><div class="pr">${rp(p.total)}</div><div class="mu sm">Produk sekitar ${rp(sum(p))} ditambah biaya kurasi ${rp(FEE.cur)}</div><ul class="sm" style="padding-left:18px;margin:10px 0">${p.i.map(j=>`<li>${PR[j][0]}</li>`).join("")}</ul><p class="sm"><i>${why(p)}</i></p><button class="btn" data-a="pick" data-v="${k}">Pilih Kado Ini</button></div>`).join("")}<button class="lnk" data-a="redo">Ubah jawabanku</button>`;
+V.pers=()=>{const p=S.pkg,c=S.card,t=calc();return `${hd("Personalisasi","recs")}<div class="card row"><div><b>${p.n}</b><div class="mu sm">${rp(sum(p))} ditambah kurasi ${rp(FEE.cur)}</div></div><span style="font-size:28px">${p.e}</span></div>
+<h2>Kartu ucapan 💌</h2><button class="opt${c.on?" on":""}" data-a="cardon"><span>Tambah kartu ucapan personal</span><b>+${rp(FEE.card)}</b></button>${c.on?`${fld("Nama penerima","card.to",c.to)}<label>Isi kartu</label><textarea data-k="card.msg">${esc(c.msg)}</textarea><button class="lnk" data-a="tpl">Pakai contoh kalimat</button>`:""}
+<h2>Kemasan 🎀</h2>${["Standard","Premium","Luxury"].map((n,i)=>`<button class="opt${S.pack==i?" on":""}" data-a="pack" data-v="${i}"><span>${n} Packaging</span><b>${i?"+"+rp(FEE.pack[i]):"Gratis"}</b></button>`).join("")}<div class="box b${S.pack}">🎁</div>
+<div class="bot"><div><span style="flex:1"><span class="mu sm">Total dengan ongkir</span><br><b>${rp(t.total)}</b></span><button class="btn" style="flex:1.3" data-a="co">Lanjut ke Checkout</button></div></div>`};
+V.co=()=>{const t=calc(),c=S.co,L=(a,b)=>`<div class="ln"><span class="mu">${a}</span><span>${b}</span></div>`;
+return `${hd("Checkout","pers")}<div class="card"><b>Ringkasan pesanan</b>${L(S.pkg.n+" ("+S.pkg.i.length+" produk)",rp(t.prod))}${L("Biaya kurasi",rp(t.cur))}${L("Packaging",t.pk?rp(t.pk):"Gratis")}${L("Kartu ucapan",t.cd?rp(t.cd):"Tidak ada")}${L("Ongkir",rp(t.ship))}<div class="ln tt"><span>Total</span><span>${rp(t.total)}</span></div></div>
+<h3>Data pemesan</h3>${fld("Nama kamu","co.name",c.name)}${fld("Nomor WhatsApp","co.wa",c.wa,'type="tel" inputmode="tel"')}${fld("Email","co.em",c.em,'type="email"')}<label>Alamat pengiriman</label><textarea data-k="co.addr"${S.er["co.addr"]?' class="er"':""}>${esc(c.addr)}</textarea>${fld("Nama penerima","co.rn",c.rn)}${fld("Nomor penerima (opsional)","co.rp",c.rp,'type="tel"')}${fld("Catatan pengiriman","co.note",c.note)}
+<p class="mu sm" style="margin-top:14px">Mode demo: pembayaran masih simulasi dan belum terhubung ke Midtrans atau Xendit.</p><div class="bot"><div><button class="btn" data-a="order">Pesan Paket Kado</button></div></div>`};
+V.track=()=>{const o=S.order;return `${hd("Status pesanan","home")}<div class="card"><div class="row"><b>${o.no}</b><span class="bd">${ST[o.st][1]}</span></div><div class="mu sm">${o.e} ${esc(o.pkg)} untuk ${esc(o.to)}</div><div class="pr" style="font-size:18px">${rp(o.total)}</div></div><h2 style="margin-top:24px">Perjalanan kadonya</h2>${ST.map((s,i)=>`<div class="tl ${i<o.st?"done":i==o.st?"now":""}"><span class="dot">${s[0]}</span><div><b>${s[1]}</b><small>${s[2]}</small></div></div>`).join("")}<button class="btn g" data-a="adv"${o.st>3?" disabled":""}>Simulasikan status berikutnya (demo)</button><button class="lnk" data-a="home">Kembali ke beranda</button>`};
+
+const app=document.getElementById("app"),render=()=>{app.innerHTML=V[S.v]()},go=v=>{S.v=v;render();scrollTo(0,0)};
+const act={
+start(){ev("gift_finder_started");S.st=0;go("find")},home(){go("home")},recs(){go("recs")},pers(){go("pers")},track(){go("track")},redo(){S.st=0;go("find")},
+one(v,b){S.q[b.dataset.k]=v;render()},
+many(v,b){const a=S.q[b.dataset.k],i=a.indexOf(v);i<0?a.push(v):a.splice(i,1);render()},
+bud(v){S.q.bud=+v;S.q.cb="";render()},
+prev(){S.st>0?(S.st--,render()):go("home")},
+next(){const q=S.q,s=S.st,ok=[q.occ,q.name.trim()&&q.rel,1,(q.bud=+q.cb||q.bud),1,1][s];
+if(!ok){toast(s==3?"Pilih atau isi budget dulu ya 🙂":"Lengkapi dulu ya 🙂");return}
+if(s<5){S.st++;render();scrollTo(0,0)}else{S.recs=rec();ev("gift_finder_completed");ev("recommendation_viewed");go("recs")}},
+pick(v){S.pkg=S.recs[v];S.card.to=S.q.name;S.card.msg=tpl();S.pack=0;ev("package_selected");go("pers")},
+cardon(){S.card.on=S.card.on?0:1;ev("addon_selected");render()},
+tpl(){S.card.msg=tpl();render()},
+pack(v){S.pack=+v;ev("addon_selected");render()},
+co(){S.co.rn=S.co.rn||S.card.to||S.q.name;ev("checkout_started");go("co")},
+order(){const c=S.co,e={};["name","wa","em","addr"].forEach(k=>{if(!String(c[k]||"").trim())e["co."+k]=1});if(c.em&&!/^\S+@\S+\.\S+$/.test(c.em))e["co.em"]=1;S.er=e;
+if(Object.keys(e).length){toast("Lengkapi data yang bertanda merah ya 🙂");render();return}
+S.order={no:"KDO-"+Math.random().toString(36).slice(2,7).toUpperCase(),pkg:S.pkg.n,e:S.pkg.e,to:c.rn||S.q.name,total:calc().total,st:0};save();ev("order_completed");go("track")},
+adv(){if(S.order.st<4){S.order.st++;save();render()}}};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(b&&act[b.dataset.a])act[b.dataset.a](b.dataset.v,b)});
+document.addEventListener("input",e=>{const k=e.target.dataset.k;if(!k||e.target.tagName=="BUTTON")return;const p=k.split("."),l=p.pop();p.reduce((o,x)=>o[x],S)[l]=e.target.value;if(k=="q.cb")document.querySelectorAll("[data-a=bud]").forEach(c=>c.classList.remove("on"))});
+ev("landing_viewed");render();
+</script>
+</body>
+</html>
