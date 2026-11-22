@@ -1,0 +1,78 @@
+name: Build APK
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Susun proyek Android
+        run: |
+          test -f index.html || { echo "Upload index.html dulu"; exit 1; }
+          mkdir -p p/app/src/main/assets p/app/src/main/java/id/kadoind/app p/app/src/main/res/drawable
+          cp index.html p/app/src/main/assets/
+          cd p
+          cat > settings.gradle <<'EOF'
+          pluginManagement { repositories { google(); mavenCentral() } }
+          rootProject.name = "KadoInd"
+          include ':app'
+          EOF
+          echo "plugins { id 'com.android.application' version '8.5.2' apply false }" > build.gradle
+          cat > app/build.gradle <<'EOF'
+          plugins { id 'com.android.application' }
+          android {
+            namespace 'id.kadoind.app'
+            compileSdk 34
+            defaultConfig { applicationId 'id.kadoind.app'; minSdk 23; targetSdk 34; versionCode 1; versionName '1.0' }
+            compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+          }
+          EOF
+          cat > app/src/main/AndroidManifest.xml <<'EOF'
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+            <application android:label="KadoInd" android:icon="@drawable/ic_launcher" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+              <activity android:name=".MainActivity" android:exported="true" android:screenOrientation="portrait" android:configChanges="orientation|screenSize|keyboardHidden" android:windowSoftInputMode="adjustResize">
+                <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+              </activity>
+            </application>
+          </manifest>
+          EOF
+          cat > app/src/main/res/drawable/ic_launcher.xml <<'EOF'
+          <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108"><path android:fillColor="#C2185B" android:pathData="M0,0h108v108h-108z"/><path android:fillColor="#E9B44C" android:pathData="M48,18h12v72h-12z"/><path android:fillColor="#E9B44C" android:pathData="M18,48h72v12h-72z"/></vector>
+          EOF
+          cat > app/src/main/java/id/kadoind/app/MainActivity.java <<'EOF'
+          package id.kadoind.app;
+          import android.app.Activity;
+          import android.os.Bundle;
+          import android.webkit.WebView;
+          import android.webkit.WebViewClient;
+          public class MainActivity extends Activity {
+            WebView w;
+            protected void onCreate(Bundle b) {
+              super.onCreate(b);
+              w = new WebView(this);
+              w.getSettings().setJavaScriptEnabled(true);
+              w.getSettings().setDomStorageEnabled(true);
+              w.setWebViewClient(new WebViewClient());
+              setContentView(w);
+              w.loadUrl("file:///android_asset/index.html");
+            }
+            public void onBackPressed() {
+              w.evaluateJavascript("(function(){var b=document.querySelector('.top .ic');if(b){b.click();return 1}return 0})()", v -> { if (!"1".equals(v)) finish(); });
+            }
+          }
+          EOF
+      - name: Build
+        working-directory: p
+        run: gradle assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk KadoInd.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KadoInd-apk
+          path: p/KadoInd.apk
